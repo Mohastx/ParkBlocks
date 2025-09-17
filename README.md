@@ -1,12 +1,14 @@
-# ParkBlocks 🚗
+# ParkBlocks 
 
 ## Overview
 
-ParkBlocks is a decentralized smart parking reservation system built on the Stacks blockchain. It enables users to book and manage parking spots using NFTs that represent time-locked reservations, providing a transparent and automated parking management solution.
+ParkBlocks is a decentralized smart parking reservation system built on the Stacks blockchain. It enables users to book and manage parking spots using NFTs that represent time-locked reservations, providing a transparent and automated parking management solution with dynamic pricing capabilities.
 
 ## Features
 
 - **NFT-Based Reservations**: Each parking reservation is represented by an NFT with embedded timestamp data
+- **Dynamic Pricing System**: Intelligent surge pricing based on demand, time of day, and location popularity
+- **Oracle Data Integration**: Real-time pricing adjustments using trusted oracle feeds
 - **Automatic Expiration**: Smart contracts automatically handle reservation expiration without manual intervention
 - **QR Code Integration**: Mobile-friendly QR scanning for seamless check-in/check-out process
 - **Decentralized Management**: No central authority needed for parking spot allocation
@@ -18,6 +20,7 @@ ParkBlocks is a decentralized smart parking reservation system built on the Stac
 - **Smart Contracts**: Clarity
 - **Frontend**: React/Next.js
 - **Mobile Integration**: QR code scanning capabilities
+- **Oracle Integration**: Stacks Oracle for real-time data feeds
 - **Development Tools**: Clarinet for testing and deployment
 
 ## Getting Started
@@ -59,16 +62,51 @@ clarinet check
 
 The system consists of several Clarity smart contracts:
 
-- **Parking Reservation Contract**: Manages NFT minting and reservation logic
+- **Parking Reservation Contract**: Manages NFT minting and reservation logic with dynamic pricing
 - **Fee Management Contract**: Handles pricing and payment distribution
 - **Access Control Contract**: Manages parking spot availability and access
+- **Oracle Integration**: Connects with external data feeds for real-time pricing adjustments
+
+## Dynamic Pricing Features
+
+### Demand-Based Pricing
+- **Real-time demand tracking**: Monitors reservation frequency and adjusts prices accordingly
+- **Surge multipliers**: Automatic price increases during high-demand periods
+- **Cool-down periods**: Gradual price normalization when demand decreases
+
+### Time-Based Pricing
+- **Peak hour premiums**: Higher rates during rush hours and popular times
+- **Off-peak discounts**: Reduced rates during low-demand periods
+- **Weekend and holiday adjustments**: Special pricing for events and holidays
+
+### Location-Based Pricing
+- **Popularity scoring**: Dynamic pricing based on historical booking patterns
+- **Area multipliers**: Premium pricing for high-demand locations
+- **Proximity bonuses**: Adjusted rates based on nearby amenities and attractions
+
+### Oracle Data Integration
+- **External data feeds**: Integration with traffic, weather, and event data
+- **Trusted oracle network**: Multiple data sources for pricing accuracy
+- **Fallback mechanisms**: Default pricing when oracle data is unavailable
 
 ## Usage
 
-1. **Browse Available Spots**: View available parking spaces on the map interface
-2. **Make Reservation**: Select desired time slot and mint reservation NFT
-3. **Check-in**: Scan QR code at parking location to activate reservation
-4. **Automatic Expiration**: Reservation automatically expires at the scheduled time
+1. **Browse Available Spots**: View available parking spaces with real-time dynamic pricing
+2. **Check Current Rates**: See demand-adjusted pricing before making reservations
+3. **Make Reservation**: Select desired time slot and mint reservation NFT at current market rate
+4. **Check-in**: Scan QR code at parking location to activate reservation
+5. **Automatic Expiration**: Reservation automatically expires at the scheduled time
+
+## API Endpoints
+
+### Pricing Information
+- `GET /api/pricing/spot/:id` - Get current pricing for specific spot
+- `GET /api/pricing/demand/:area` - Check demand levels for area
+- `GET /api/pricing/surge-status` - Current surge pricing status
+
+### Oracle Integration
+- `POST /api/oracle/update-demand` - Update demand data (oracle only)
+- `GET /api/oracle/status` - Oracle connection status
 
 ## Contributing
 
@@ -86,28 +124,50 @@ clarinet test
 
 # Run specific test file
 clarinet test tests/parking-reservation-test.ts
+
+# Test dynamic pricing
+clarinet test tests/dynamic-pricing-test.ts
+```
+
+## Configuration
+
+### Environment Variables
+```bash
+ORACLE_ENDPOINT=https://api.oracle.example.com
+SURGE_MULTIPLIER_MAX=3.0
+PEAK_HOURS_START=7
+PEAK_HOURS_END=19
 ```
 
 ## Roadmap
 
-### 1. Dynamic Pricing System
+### ✅ 1. Dynamic Pricing System
 Implement surge pricing based on demand, time of day, and location popularity using oracle data feeds.
+
 ### 2. Loyalty Rewards Program
 Create a staking mechanism where frequent users earn STX rewards and discounted parking rates.
+
 ### 3. Multi-Chain Integration
 Expand to other Bitcoin Layer 2s and enable cross-chain parking reservations.
+
 ### 4. IoT Sensor Integration
 Connect with physical parking sensors to provide real-time availability updates and automated check-ins.
+
 ### 5. Reputation System
 Implement user ratings and reviews for parking spots, with penalties for no-shows and rewards for reliable users.
+
 ### 6. Group Booking Features
 Enable bulk reservations for events, with group discounts and coordinated parking arrangements.
+
 ### 7. Carbon Credit Integration
 Track and reward eco-friendly parking behaviors, such as EV charging station usage and carpooling.
+
 ### 8. Advanced Analytics Dashboard
 Provide parking operators with detailed analytics, revenue tracking, and predictive demand modeling.
+
 ### 9. Mobile App with AR Navigation
 Create a native mobile app with augmented reality features to help users locate their reserved spots.
+
 ### 10. Insurance and Protection Services
 Offer optional vehicle protection insurance during parking periods, integrated with the reservation NFT.
 
